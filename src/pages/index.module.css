@@ -1,0 +1,31 @@
+.movieGrid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+	gap: 1rem;
+	padding: 1rem;
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.recommendedMovies {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 1rem;
+	padding: 1rem;
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.section {
+	margin-bottom: 2rem;
+	width: 100%;
+}
+
+.section h2,
+.section h3 {
+	padding: 0 1rem;
+	margin-bottom: 1rem;
+	max-width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+}

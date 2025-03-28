@@ -1,0 +1,11 @@
+.container {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 1rem;
+}
+
+.movieGrid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1rem;
+}

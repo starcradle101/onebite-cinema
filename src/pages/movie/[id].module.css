@@ -1,0 +1,43 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.poster_img_container {
+	display: flex;
+	justify-content: center;
+	padding: 20px;
+
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+
+	position: relative;
+}
+
+.poster_img_container::before {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	content: '';
+	opacity: 0.5;
+}
+
+.poster_img_container img {
+	max-height: 350px;
+	height: 100%;
+	z-index: 1;
+}
+
+.title {
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.subTitle {
+	font-weight: bold;
+}

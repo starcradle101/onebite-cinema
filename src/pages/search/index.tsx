@@ -1,13 +1,19 @@
 import SearchableLayout from '@/components/searchable-layout';
 import { ReactNode } from 'react';
-import { useRouter } from 'next/router';
+import movies from '@/dummy.json';
+import MovieItem from '@/components/movie-item';
+import styles from './index.module.css';
 
 export default function Page() {
-	const router = useRouter();
-
-	const { q } = router.query;
-
-	return <h1>검색 결과: {q}</h1>;
+	return (
+		<div className={styles.container}>
+			<div className={styles.movieGrid}>
+				{movies.map((movie) => (
+					<MovieItem key={movie.id} movie={movie} />
+				))}
+			</div>
+		</div>
+	);
 }
 
 Page.getLayout = (page: ReactNode) => {
