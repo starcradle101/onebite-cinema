@@ -1,12 +1,26 @@
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
+import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import fetchMovieDetail from '@/lib/fetchMovieDetail';
 import styles from './[id].module.css';
+import { useRouter } from 'next/router';
+import fetchAllMovies from '@/lib/fetchAllMovies';
 
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
+export const getStaticPaths = async () => {
+  const allMovies = await fetchAllMovies();
+  const paths = allMovies.map((movie) => ({
+    params: { id: movie.id.toString() },
+  }));
+
+  return {
+    paths,
+    fallback: true,
+  };
+};
+
+export const getStaticProps = async (context: GetStaticPropsContext) => {
   const id = context.params!.id;
   const movieDetail = await fetchMovieDetail(Number(id));
+
+  if (!movieDetail) return { notFound: true };
 
   return {
     props: {
@@ -17,8 +31,11 @@ export const getServerSideProps = async (
 
 export default function Page({
   movieDetail,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  if (movieDetail === null) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const router = useRouter();
+
+  if (router.isFallback) return <div>로딩 중입니다...</div>;
+  if (!movieDetail) {
     return <div>영화 정보를 찾을 수 없습니다.</div>;
   }
 

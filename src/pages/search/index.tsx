@@ -1,26 +1,27 @@
 import SearchableLayout from '@/components/searchable-layout';
-import { ReactNode } from 'react';
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
+import { ReactNode, useEffect, useState } from 'react';
 import fetchMovieSearchResult from '@/lib/fetchMovieSearchResult';
 import MovieItem from '@/components/movie-item';
 import styles from './index.module.css';
+import { useRouter } from 'next/router';
 
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  const q = context.query.q;
-  const movies = await fetchMovieSearchResult(q as string);
+export default function Page() {
+  const [movies, setMovies] = useState<MovieData[]>([]);
 
-  return {
-    props: {
-      movies,
-    },
+  const router = useRouter();
+  const { q } = router.query;
+
+  const fetchSearchResult = async () => {
+    const result = await fetchMovieSearchResult(q as string);
+    setMovies(result);
   };
-};
 
-export default function Page({
-  movies,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  useEffect(() => {
+    if (q) {
+      fetchSearchResult();
+    }
+  }, [q]);
+
   return (
     <div className={styles.container}>
       <div className={styles.movieGrid}>
